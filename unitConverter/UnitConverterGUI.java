@@ -60,7 +60,22 @@ public class UnitConverterGUI extends JFrame {
     private void convert() {
         String fromUnit = (String) fromUnitDropdown.getSelectedItem();
         String toUnit = (String) toUnitDropdown.getSelectedItem();
-        double quantity = Double.parseDouble(quantityField.getText());
+        String quantityText = quantityField.getText();
+
+        // Checks if quantity is a valid double
+        double quantity;
+        try {
+            quantity = Double.parseDouble(quantityText);
+        } catch (NumberFormatException ex) {
+            resultLabel.setText("Invalid quantity. Please enter a valid number.");
+            return;
+        }
+
+        // Checks if units are selected
+        if (fromUnit.isEmpty() || toUnit.isEmpty()) {
+            resultLabel.setText("Please select conversion units.");
+            return;
+        }
 
         double result;
         String conversionResult;
